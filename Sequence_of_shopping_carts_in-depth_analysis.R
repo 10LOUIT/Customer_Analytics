@@ -151,6 +151,29 @@ statd <- seqistatd(df.seq) #function returns for each sequence the time spent in
 apply(statd, 2, mean) #We may be interested in the mean time spent in each state
 
 ### ### ###
+# http://analyzecore.com/2014/12/27/sequence-carts-in-depth-analysis-with-r-clustering/
+### ### ###
+
+# CLUSTERING
+library(cluster)
+df.om <- seqdist(df.seq, method='OM', indel=1, sm='TRATE', with.missing=TRUE) # computing the optimal matching distances
+clusterward <- agnes(df.om, diss=TRUE, method="ward") # building a Ward hierarchical clustering
+df.cl4 <- cutree(clusterward, k=4) # cut the tree for creating 4 clusters
+cl4.lab <- factor(df.cl4, labels=paste("Cluster", 1:4)) # creating label with the number of cluster for each customer
+
+# distribution chart
+seqdplot(df.seq, group=cl4.lab, border=NA)
+# frequence chart
+seqfplot(df.seq, group=cl4.lab, pbarw=T, border=NA)
+# mean time plot
+seqmtplot(df.seq, group=cl4.lab, border=NA)
+
+seqrplot(df.seq, group=cl4.lab, dist.matrix=df.om, trep=0.35, border=NA)
+
+
+### ### ###
+# http://analyzecore.com/2015/01/28/sequence-carts-in-depth-analysis-with-r-events
+### ### ###
 # calculating entropy
 df.ient <- seqient(df.seq)
 hist(df.ient, col='cyan', main=NULL, xlab='Entropy') # plot an histogram of the within entropy of the sequences
@@ -164,3 +187,11 @@ head(df.evseq)
 
 df.subseq <- seqefsub(df.evseq, pMinSupport=0.01) # searching for frequent event subsequences
 plot(df.subseq[1:10], col="cyan", ylab="Frequency", xlab="Subsequences", cex=1.5) # plotting
+
+discrseq <- seqecmpgroup(df.subseq, group=df.feat$sex) # searching for frequent sequences that are related to gender
+head(discrseq)
+plot(discrseq[1:10], cex=1.5) # plotting 10 frequent subsequences
+plot(discrseq[1:10], ptype="resid", cex=1.5) # plotting 10 residuals
+
+rules <- TraMineR:::seqerules(df.subseq) # searching for rules
+head(rules)
