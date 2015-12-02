@@ -33,21 +33,19 @@ TotalTimes <- rep(1,times=nrow)
 
 #caculate the data for the above three vectors.
 n<-2
+Interval <- vector(length = nrow)
 for (i in 2 : nrow){
-
-if (df[i,"ID"] == df[i-1,"ID"]){
-	Interval[i] <- as.numeric(difftime(df[i,"Date"],df[i-1,"Date"],units="days"))	
-	Times[i] <- n
-	n <- n+1
-	print(n)
-	print(i)
-}else{
- 	TotalTimes[(i-n+1) : (i-1)] <- n-1
-	n<-2
+  if (df[i,"ID"] == df[i-1,"ID"]){
+  	Interval[i] <- as.numeric(difftime(df[i,"Date"],df[i-1,"Date"],units="days"))	
+  	Times[i] <- n
+  	n <- n+1
+  	sprintf("n: %s", 2)
+  	sprintf("i: %s", i)
+  }else{
+   	TotalTimes[(i-n+1) : (i-1)] <- n-1
+  	n<-2
+  }
 }
-
-}
-
 #add the three vectors to the data frame 
 df <- cbind(df, Interval,Times,TotalTimes)
 
@@ -92,4 +90,3 @@ mean(df2$Interval)
 
 # take a look at the distributions of the Customer Latency
 hist(df2$Interval,main="Distribution of Customer Latency (1st - 2nd purchase)", xlab="Days", ylab="Number of 2nd Transcations")
-
