@@ -1,9 +1,9 @@
 ###############################################################################
-Description: A set of R functions to implement the Independent RFM scoring and the RFM scoring with input breaks.
-Author: Jack Han     http://www.DataApple.net   email: jackhan2008 # qq.com
-Version: 1.3  
-Date:   23 Dec 2013 	
-Usage:  Read the article "RFM Customer Analysis with R Language" http://www.dataapple.net/?p=84
+# Description: A set of R functions to implement the Independent RFM scoring and the RFM scoring with input breaks.
+# Author: Jack Han     http://www.DataApple.net   email: jackhan2008 # qq.com
+# Version: 1.3  
+# Date:   23 Dec 2013 	
+# Usage:  Read the article "RFM Customer Analysis with R Language" http://www.dataapple.net/?p=84
 ################################################################################
 
 
